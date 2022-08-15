@@ -68,7 +68,7 @@ class WebTasks(SequentialTaskSet):
 
 
 class WebUser(HttpUser):
-    host = "https://api.elliegrid.inhouse.decemberlabs.com"
+    host = "url"
     tasks = [WebTasks]
     wait_time = between(1, 9)
 

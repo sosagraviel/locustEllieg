@@ -20,7 +20,7 @@ execution:
 scenarios:
   elliegrid_pills:
     script: src/elliegrid.py
-    default-address: "https://api.elliegrid.inhouse.decemberlabs.com"
+    default-address: "url"
 modules:
   blazemeter:
     dedicated-ips: false
