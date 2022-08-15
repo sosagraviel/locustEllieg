@@ -1,0 +1,44 @@
+provisioning: cloud
+settings:
+  artifacts-dir: build/%H%M%S
+  default-executor: locust
+  env:
+    LOCAL_THREAD_COUNT: 1  # number of users/threads (assuming 20 peak concurrent users from 1000 users/hour)
+    CLOUD_THREAD_COUNT: 1  # number of users/threads (assuming 20 peak concurrent users from 1000 users/hour)
+    RAMP_UP: 5 # time for users to build from 0 to number of users/threads
+    HOLD_FOR: 22
+    THINK-TIME: 2000ms # delay between request to simulate human thinking
+    TIME-OUT: 50s
+
+execution:
+  - scenario: elliegrid_pills
+    ramp-up: ${RAMP_UP}
+    hold-for: ${HOLD_FOR}
+    concurrency:
+      local: ${LOCAL_THREAD_COUNT}
+      cloud: ${CLOUD_THREAD_COUNT}
+scenarios:
+  elliegrid_pills:
+    script: src/elliegrid.py
+    default-address: "https://api.elliegrid.inhouse.decemberlabs.com"
+modules:
+  blazemeter:
+    dedicated-ips: false
+  cloud:
+    token: "451152f2540c0e6371203e67:3b8e1c7511f16200630707ae8b964acf0fd8c0024161faa0e8fa6d703ed965f724ce40f3"
+    account: 811674
+    workspace: 823262
+    project: 945240
+    report-name: Elliegrid
+    test: Assessment flow
+    browser-open: none
+    public-report: true
+    send-report-email: false
+    upload-artifacts: false
+reporting:
+- module: console
+- module: final-stats
+  summary: true  # overall samples count and percent of failures
+  percentiles: true  # display average times and percentiles
+  failed-labels: true  # provides list of sample labels with failures
+  test-duration: true  # provides test duration
